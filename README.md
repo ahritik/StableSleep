@@ -1,11 +1,11 @@
-# Stabilize-While-You-Sleep: Source-Free Test-Time Adaptation for Sleep-EDF
+# StableSleep: Source-Free Test-Time Adaptation for Sleep-EDF
 
-This repo contains a **streaming, source-free TTA** recipe for sleep staging on **MNE Sleep-EDF (Expanded)**.
+StableSleep delivers a **streaming, source-free test-time adaptation (TTA)** recipe for sleep staging on **MNE Sleep-EDF (Expanded)**.
 
-- **Method**: Tent-style entropy minimization that updates **only BN γ/β** + **BN stats refresh**.
-- **Safety rails**: (1) **Entropy gate** (skip adaptation if uncertainty high); (2) **EMA reset** of BN params every *K* steps or on spikes.
-- **Baselines**: No-adapt, BN-only, Tent (ours), optional T3A (classifier-only; not included by default).
-- **Metrics**: Macro-F1, Cohen’s κ (overall + per-subject), latency per epoch update on Apple Silicon (MPS if available).
+- **Method**: Tent-style entropy minimization on BN γ/β + BN stats refresh.  
+- **Safety rails**: entropy gate + EMA reset.  
+- **Baselines**: No-adapt, BN-only, Tent (ours), optional T3A.  
+- **Metrics**: Macro-F1, Cohen’s κ (overall + per-subject), latency per epoch.
 
 > ⚠️ Note: This skeleton prefers a simple **npz-based dataset** produced by a preprocessing script. You can adapt the provided `data/sleepedf_mne.py` to export per-subject `.npz` files from raw Sleep-EDF using MNE.
 
