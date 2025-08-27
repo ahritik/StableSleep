@@ -1,0 +1,35 @@
+# Default configuration for Stabilize-While-You-Sleep
+seed: 1337
+data:
+  processed_root: ./data/processed
+  channels: ["Fpz-Cz"]           # ["Fpz-Cz"] or add ["Pz-Oz"], etc.
+  epoch_sec: 30
+  fs: 100                        # resampled Hz
+  splits:
+    train: train                 # directory names under processed_root
+    val: val
+    test: test
+model:
+  n_classes: 5                   # W, N1, N2, N3, REM
+  dropout: 0.2
+  hidden: 64
+  attn_hidden: 32
+train:
+  batch_size: 128
+  epochs: 20
+  lr: 1.0e-3
+  weight_decay: 1.0e-4
+  early_stop_patience: 5
+tta:
+  mode: tent                     # [none|bn_only|tent]
+  lr: 1.0e-3
+  grad_clip: 1.0
+  entropy_gate: 1.6              # skip adapt if mean H > tau
+  ema: 0.99
+  reset_every: 200
+  batch_size: 8                  # streaming micro-batch
+eval:
+  batch_size: 64
+  robust: none                   # [none|emg|line|dropout]
+  robust_level: 0.2              # strength of synthetic corruption
+device: auto                     # [auto|cpu|cuda|mps]
