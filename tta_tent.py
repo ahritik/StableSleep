@@ -1,126 +1,93 @@
-from __future__ import annotations
-from dataclasses import dataclass
-from typing import Dict, Iterable, List, Tuple
-import copy, time
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
+"""Tent-style test-time adaptation (source-free) with simple safety rails.
 
-def softmax_entropy(logits):
-    p = F.softmax(logits, dim=-1)
-    return -(p * (p.clamp_min(1e-8).log())).sum(dim=-1)
+We adapt only the **BatchNorm affine parameters** (gamma/beta) and refresh
+BN running stats. Safety rails:
+  - Entropy gate: skip updates when predictions are too uncertain.
+  - EMA shadow: keep an exponential moving average of BN params; periodically
+    copy EMA back (soft reset) to avoid drift.
+  - Step budget: limit gradient steps per window to maintain low latency.
+"""
+import numpy as np, torch
+from torch import nn, optim
 
-def collect_bn_affine_params(model: nn.Module) -> List[nn.Parameter]:
-    params = []
+def prediction_entropy(logits: torch.Tensor) -> torch.Tensor:
+    """Shannon entropy over softmax probabilities per sample (B,)."""
+    p = torch.softmax(logits, dim=1) + 1e-8
+    return -(p * torch.log(p)).sum(dim=1)
+
+def _bn_affine_params(m):
+    """Yield BN-affine parameters (weight/bias) only."""
+    for mod in m.modules():
+        if isinstance(mod, nn.BatchNorm1d):
+            if mod.weight is not None:
+                yield mod.weight
+            if mod.bias is not None:
+                yield mod.bias
+
+class BNEMAShadow:
+    """Track an EMA of BN-affine params and provide a soft reset."""
+    def __init__(self, model, decay=0.99):
+        self.decay = decay
+        self.params = [p.detach().clone() for p in _bn_affine_params(model)]
+    @torch.no_grad()
+    def update(self, model):
+        for buf, p in zip(self.params, _bn_affine_params(model)):
+            buf.mul_(self.decay).add_(p.detach(), alpha=(1-self.decay))
+    @torch.no_grad()
+    def copy_to(self, model):
+        for buf, p in zip(self.params, _bn_affine_params(model)):
+            p.copy_(buf)
+
+def tent_adapt(model: nn.Module, loader, device, cfg):
+    """Run Tent over a whole split and return (y_true, y_pred)."""
+    model.train()
+    # Train BN layers so running stats refresh; other layers unaffected
     for m in model.modules():
-        if isinstance(m, (nn.BatchNorm1d, nn.BatchNorm2d, nn.BatchNorm3d)):
-            if m.affine:
-                params += [m.weight, m.bias]
-    return [p for p in params if p is not None]
+        if isinstance(m, nn.BatchNorm1d):
+            m.train()
 
-def collect_bn_modules(model: nn.Module) -> List[nn.Module]:
-    return [m for m in model.modules() if isinstance(m, (nn.BatchNorm1d, nn.BatchNorm2d, nn.BatchNorm3d))]
+    # Freeze everything except BN-affine parameters
+    for p in model.parameters():
+        p.requires_grad_(False)
+    bn_params = list(_bn_affine_params(model))
+    for p in bn_params:
+        p.requires_grad_(True)
 
-@dataclass
-class TTARailsConfig:
-    entropy_gate: float = 1.6
-    ema: float = 0.99
-    reset_every: int = 200
-    grad_clip: float = 1.0
-    lr: float = 1e-3
+    opt = optim.Adam(bn_params, lr=cfg["tta"]["lr"], weight_decay=cfg["tta"]["weight_decay"])
+    ema = BNEMAShadow(model, decay=cfg["tta"]["ema_decay"])
 
-class TTALearner:
-    """Tent-style TTA on BN affine params + BN stats refresh, with simple rails."""
-    def __init__(self, model: nn.Module, cfg: TTARailsConfig, device: torch.device):
-        self.model = model.to(device)
-        self.cfg = cfg
-        self.device = device
+    y_pred_all, y_true_all = [], []
+    window_steps = 0
 
-        # freeze all but BN affine
-        for p in self.model.parameters():
-            p.requires_grad = False
+    for x, y in loader:
+        x = x.to(device).float()
+        y_true_all.append(y.numpy())
 
-        self.bn_params = collect_bn_affine_params(self.model)
-        for p in self.bn_params:
-            p.requires_grad = True
+        logits = model(x)
+        if isinstance(logits_out, tuple):   # tsn: (logits_center, logits_all)
+            logits = logits_out[0]
+        else:
+            logits = logits_out
+        ent = prediction_entropy(logits)  # (B,)
 
-        self.opt = torch.optim.SGD(self.bn_params, lr=cfg.lr)
-        self.step_count = 0
-
-        # EMA state for BN affine + running stats
-        self.ema_state = self._copy_bn_state()
-
-    def _copy_bn_state(self):
-        snap = {}
-        for i, m in enumerate(collect_bn_modules(self.model)):
-            snap[i] = dict(
-                weight=m.weight.detach().clone() if m.affine else None,
-                bias=m.bias.detach().clone() if m.affine else None,
-                running_mean=m.running_mean.detach().clone(),
-                running_var=m.running_var.detach().clone(),
-                num_batches_tracked=m.num_batches_tracked.detach().clone(),
-            )
-        return snap
-
-    def _load_bn_state(self, snap):
-        for i, m in enumerate(collect_bn_modules(self.model)):
-            s = snap[i]
-            if m.affine:
-                m.weight.data.copy_(s["weight"])
-                m.bias.data.copy_(s["bias"])
-            m.running_mean.data.copy_(s["running_mean"])
-            m.running_var.data.copy_(s["running_var"])
-            m.num_batches_tracked.data.copy_(s["num_batches_tracked"])
-
-    @torch.no_grad()
-    def _ema_update(self):
-        for i, m in enumerate(collect_bn_modules(self.model)):
-            s = self.ema_state[i]
-            if m.affine:
-                s["weight"].mul_(self.cfg.ema).add_(m.weight.detach(), alpha=1-self.cfg.ema)
-                s["bias"].mul_(self.cfg.ema).add_(m.bias.detach(),   alpha=1-self.cfg.ema)
-            s["running_mean"].mul_(self.cfg.ema).add_(m.running_mean.detach(), alpha=1-self.cfg.ema)
-            s["running_var"].mul_(self.cfg.ema).add_(m.running_var.detach(),   alpha=1-self.cfg.ema)
-            s["num_batches_tracked"].mul_(self.cfg.ema).add_(m.num_batches_tracked.detach(), alpha=1-self.cfg.ema)
-
-    def adapt_step(self, x):
-        """One streaming step: optionally update BN stats + one gradient step on entropy."""
-        self.model.train()  # enable BN stats
-        x = x.to(self.device)
-        self.opt.zero_grad(set_to_none=True)
-        logits = self.model(x)
-        H = softmax_entropy(logits)  # (B,)
-        if H.mean().item() <= self.cfg.entropy_gate:
-            loss = H.mean()
+        # Safety rail: only adapt when reasonably confident
+        if ent.mean().item() <= cfg["tta"]["entropy_gate"]:
+            loss = ent.mean()
+            opt.zero_grad(set_to_none=True)
             loss.backward()
-            if self.cfg.grad_clip is not None:
-                torch.nn.utils.clip_grad_norm_(self.bn_params, self.cfg.grad_clip)
-            self.opt.step()
-        # update EMA from current BN state
-        self._ema_update()
-        self.step_count += 1
-        # periodic reset to EMA
-        if self.cfg.reset_every and (self.step_count % self.cfg.reset_every == 0):
-            self._load_bn_state(self.ema_state)
-        return logits.detach(), H.detach()
+            torch.nn.utils.clip_grad_norm_(bn_params, 5.0)
+            opt.step()
+            ema.update(model)
+            window_steps += 1
 
-    @torch.no_grad()
-    def forward(self, x):
-        self.model.eval()  # inference (no BN stats update)
-        return self.model(x.to(self.device))
+            # Budget: periodically pull back toward EMA to avoid drift
+            if window_steps >= cfg["tta"]["max_steps_per_window"]:
+                ema.copy_to(model)
+                window_steps = 0
 
-class BNOnly:
-    """BN-only recalibration: update running stats without gradient steps."""
-    def __init__(self, model: nn.Module, device: torch.device):
-        self.model = model.to(device)
-        self.device = device
+        y_pred = logits.argmax(dim=1).cpu().numpy()
+        y_pred_all.append(y_pred)
 
-    @torch.no_grad()
-    def refresh(self, x):
-        self.model.train()  # update BN stats
-        _ = self.model(x.to(self.device))
-
-    @torch.no_grad()
-    def forward(self, x):
-        self.model.eval()
-        return self.model(x.to(self.device))
+    y_true = np.concatenate(y_true_all)
+    y_pred = np.concatenate(y_pred_all)
+    return y_true, y_pred
