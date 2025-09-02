@@ -1,0 +1,1 @@
+On the Sleep-EDF test subjects, the source model achieves Accuracy = 0.670, Cohen's κ = 0.394, Macro-F1 = 0.351, and Weighted-F1 = 0.701. Per-stage F1 follows the expected pattern with N2 highest and N1 lowest.

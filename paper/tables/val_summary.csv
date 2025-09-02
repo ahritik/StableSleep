@@ -1,0 +1,2 @@
+macroF1,kappa,accuracy,balanced_accuracy,weighted_F1,MCC,ECE
+0.3675,0.3830,0.6173,0.3912,0.6599,0.3942,0.0755

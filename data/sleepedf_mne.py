@@ -25,6 +25,23 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
 
+def _loader_common_kwargs():
+    """Choose DataLoader kwargs based on backend; disable pin_memory on MPS."""
+    is_mps = torch.backends.mps.is_available()
+    workers = max(2, int(os.environ.get("NUM_WORKERS", "8")))
+    # Default: pin on CUDA/CPU; OFF on MPS. Allow manual override via PIN_MEMORY.
+    pin_env = os.environ.get("PIN_MEMORY")
+    if pin_env is not None:
+        pin = bool(int(pin_env))
+    else:
+        pin = False if is_mps else True
+    return dict(
+        num_workers=workers,
+        persistent_workers=True if workers > 0 else False,
+        prefetch_factor=2 if workers > 0 else None,
+        pin_memory=pin,
+    )
+
 # ---------------- Label mapping (R&K → AASM) ----------------
 def _stage_from_annot(desc: str):
     """Map R&K labels (W,R,1,2,3,4,M,?) to AASM {W=0,N1=1,N2=2,N3=3,REM=4}.
@@ -239,6 +256,8 @@ def build_loaders(processed_root: str, split: str, batch_size: int, augment_cfg=
     persistent = True
     prefetch   = 2
 
+    kw = _loader_common_kwargs()
+
     if balanced and split == "train" and len(y) > 0:
         sampler = make_balanced_sampler(y)
         dl = DataLoader(
@@ -246,23 +265,18 @@ def build_loaders(processed_root: str, split: str, batch_size: int, augment_cfg=
             batch_size=batch_size,
             sampler=sampler,
             shuffle=False,
-            num_workers=workers,
-            persistent_workers=persistent,
-            pin_memory=pin,
-            prefetch_factor=prefetch,
             drop_last=True,
+            **kw,
         )
     else:
         dl = DataLoader(
             ds,
             batch_size=batch_size,
             shuffle=(split == "train"),
-            num_workers=workers,
-            persistent_workers=persistent,
-            pin_memory=pin,
-            prefetch_factor=prefetch,
             drop_last=(split == "train"),
+            **kw,
         )
+
     return dl, y
 
 # ---------------- Sequence (context window) DataLoader ----------------
@@ -331,6 +345,8 @@ def build_sequence_loaders(processed_root: str, split: str, batch_size: int,
     persistent = True
     prefetch   = 2
 
+    kw = _loader_common_kwargs()
+
     if balanced and split == "train" and len(ds.labels) > 0:
         sampler = make_balanced_sampler(ds.labels)
         dl = DataLoader(
@@ -338,23 +354,18 @@ def build_sequence_loaders(processed_root: str, split: str, batch_size: int,
             batch_size=batch_size,
             sampler=sampler,
             shuffle=False,
-            num_workers=workers,
-            persistent_workers=persistent,
-            pin_memory=pin,
-            prefetch_factor=prefetch,
             drop_last=True,
+            **kw,
         )
     else:
         dl = DataLoader(
             ds,
             batch_size=batch_size,
             shuffle=(split == "train"),
-            num_workers=workers,
-            persistent_workers=persistent,
-            pin_memory=pin,
-            prefetch_factor=prefetch,
             drop_last=(split == "train"),
+            **kw,
         )
+
     return dl, ds.labels
 
 # ---------------- CLI ----------------

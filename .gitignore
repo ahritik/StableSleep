@@ -2,3 +2,5 @@ venv/*
 data/sleep-edfx/* 
 data/processed/*
 data/processed_npy/*
+runs/*
+outputs/*
