@@ -1,0 +1,17 @@
+[WARN] Missing file: runs/eval_bn_only_val_20250829-151512/out_eval/per_subject_metrics.csv
+[WARN] Missing file: runs/eval_bn_only_val_20250829-151512/out_eval/per_class_f1.csv
+[WARN] Missing file: runs/eval_bn_only_val_20250829-151512/out_eval/overall_metrics.csv
+[WARN] Missing file: runs/eval_bn_only_val_20250829-151512/out_eval/predictions.csv
+[WARN] Missing file: runs/eval_bn_only_val_20250829-151512/out_eval/confusion_matrix_counts.csv
+[WARN] Missing file: runs/eval_bn_only_val_20250829-151512/out_eval/confusion_matrix_normalized.csv
+[WARN] Missing file: runs/eval_tent_val_20250829-160400/out_eval/per_subject_metrics.csv
+[WARN] Missing file: runs/eval_tent_val_20250829-160400/out_eval/per_class_f1.csv
+[WARN] Missing file: runs/eval_tent_val_20250829-160400/out_eval/overall_metrics.csv
+[WARN] Missing file: runs/eval_tent_val_20250829-160400/out_eval/predictions.csv
+[WARN] Missing file: runs/eval_tent_val_20250829-160400/out_eval/confusion_matrix_counts.csv
+[WARN] Missing file: runs/eval_tent_val_20250829-160400/out_eval/confusion_matrix_normalized.csv
+[WARN] per_class_f1.csv unexpected format for no_adapt
+[WARN] per_class_f1.csv unexpected format for bn_only
+[WARN] per_class_f1.csv unexpected format for tent_160400
+[WARN] No per_class_f1 available; skipping F1 bars.
+[OK] Saved figures to: figs/val

@@ -1,0 +1,218 @@
+\begin{thebibliography}{10}
+
+\bibitem{berry2015aasm}
+Richard~B. Berry, R.~Brooks, C.~E. Gamaldo, S.~M. Harding, R.~M. Lloyd, C.~L. Marcus, and B.~V. Vaughn.
+\newblock {The AASM Manual for the Scoring of Sleep and Associated Events: Rules, Terminology and Technical Specifications}.
+\newblock American Academy of Sleep Medicine, 2015.
+
+\bibitem{aasm2015manual}
+Richard~B. Berry, Rita Brooks, Charlene Gamaldo, Susan~M. Harding, Robert~M. Lloyd, Carole~L. Marcus, and Bradley~V. Vaughn.
+\newblock {\em The AASM Manual for the Scoring of Sleep and Associated Events: Rules, Terminology and Technical Specifications}.
+\newblock American Academy of Sleep Medicine, Darien, IL, version 2.2 edition, 2015.
+
+\bibitem{Berry2012AASMUpdate}
+Richard~B. Berry, Rohit Budhiraja, Daniel~J. Gottlieb, and et~al.
+\newblock Rules for scoring respiratory events in sleep: Update of the 2007 aasm manual.
+\newblock {\em Journal of Clinical Sleep Medicine}, 8(5):597--619, 2012.
+
+\bibitem{berry2012aasmresp}
+Richard~B. Berry, Rohit Budhiraja, Daniel~J. Gottlieb, David Gozal, Conrad Iber, Vishesh~K. Kapur, Carole~L. Marcus, Reena Mehra, Sairam Parthasarathy, Stuart~F. Quan, Susan Redline, Kingman~P. Strohl, Susan L.~D. Ward, and Michael~M. Tangredi.
+\newblock {Rules for scoring respiratory events in sleep: update of the 2007 AASM Manual for the Scoring of Sleep and Associated Events}.
+\newblock {\em Journal of Clinical Sleep Medicine}, 8(5):597--619, 2012.
+
+\bibitem{berry2012aasm}
+Richard~B Berry et~al.
+\newblock The aasm manual for the scoring of sleep and associated events: Rules, terminology and technical specifications (version 2.0).
+\newblock {\em American Academy of Sleep Medicine}, 2012.
+
+\bibitem{chambon2018temporal}
+Stanislas Chambon, Mathieu~N Galtier, Pierrick~J Arnal, Gilles Wainrib, and Alexandre Gramfort.
+\newblock A deep learning architecture for temporal sleep stage classification using multimodal and multivariate time series.
+\newblock {\em IEEE Transactions on Neural Systems and Rehabilitation Engineering}, 2018.
+
+\bibitem{cohen1960kappa}
+Jacob Cohen.
+\newblock A coefficient of agreement for nominal scales.
+\newblock {\em Educational and Psychological Measurement}, 20(1):37--46, 1960.
+
+\bibitem{eldele2021attnsleep}
+Emadeldeen Eldele, Zhenghua Chen, Chengyu Liu, Min Wu, Chee-Keong Kwoh, Xiaoli Li, and Cuntai Guan.
+\newblock An attention-based deep learning approach for sleep stage classification with single-channel eeg.
+\newblock {\em IEEE Transactions on Neural Systems and Rehabilitation Engineering}, 29:809--818, 2021.
+
+\bibitem{eldele2021}
+Emadeldeen Eldele, Mohamed Ragab, Zhe Chen, Min Wu, Chee~Keong Kwoh, Xiaoli Li, and Cuntai Guan.
+\newblock {Time-Series Representation Learning with Temporal Convolutional Networks and Attention for Sleep Stage Classification}.
+\newblock {\em IEEE Transactions on Neural Systems and Rehabilitation Engineering}, 2021.
+
+\bibitem{elfwing2017silu}
+Stefan Elfwing, Eiji Uchibe, and Kenji Doya.
+\newblock {Sigmoid-Weighted Linear Units for Neural Network Function Approximation in Reinforcement Learning}.
+\newblock arXiv:1702.03118, 2017.
+
+\bibitem{goldberger2000physionet}
+Ary~L Goldberger, Luis~AN Amaral, Leon Glass, Jeffrey~M Hausdorff, Plamen~Ch Ivanov, Roger~G Mark, Joseph~E Mietus, George~B Moody, Chung-Kang Peng, and H~Eugene Stanley.
+\newblock Physiobank, physiotoolkit, and physionet: Components of a new research resource for complex physiologic signals.
+\newblock {\em Circulation}, 101(23):e215--e220, 2000.
+
+\bibitem{gramfort2014mne}
+Alexandre Gramfort et~al.
+\newblock Mne software for processing meg and eeg data.
+\newblock {\em NeuroImage}, 86:446--460, 2014.
+
+\bibitem{gramfort2013mne}
+Alexandre Gramfort, Martin Luessi, Eric Larson, Denis~A. Engemann, Daniel Strohmeier, Christian Brodbeck, Roman Goj, Mainak Jas, Teon Brooks, Lauri Parkkonen, and Matti~S. H{\"a}m{\"a}l{\"a}inen.
+\newblock {MEG and EEG Data Analysis with MNE-Python}.
+\newblock {\em Frontiers in Neuroscience}, 7:267, 2013.
+
+\bibitem{guo2017calibration}
+Chuan Guo, Geoff Pleiss, Yu~Sun, and Kilian~Q Weinberger.
+\newblock On calibration of modern neural networks.
+\newblock {\em Proceedings of the 34th International Conference on Machine Learning (ICML)}, 2017.
+
+\bibitem{howard2017mobilenets}
+Andrew~G Howard et~al.
+\newblock Mobilenets: Efficient convolutional neural networks for mobile vision applications.
+\newblock {\em arXiv preprint arXiv:1704.04861}, 2017.
+
+\bibitem{howard2017mobilenet}
+Andrew~G. Howard, Menglong Zhu, Bo~Chen, Dmitry Kalenichenko, Weijun Wang, Tobias Weyand, Marco Andreetto, and Hartwig Adam.
+\newblock {MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications}.
+\newblock In {\em arXiv preprint arXiv:1704.04861}, 2017.
+
+\bibitem{hu2018squeeze}
+Jie Hu, Li~Shen, and Gang Sun.
+\newblock Squeeze-and-excitation networks.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}, 2018.
+
+\bibitem{hu2018senet}
+Jie Hu, Li~Shen, Gang Sun, Samuel Albanie, and Enhua Wu.
+\newblock {Squeeze-and-Excitation Networks}.
+\newblock In {\em Proc. IEEE/CVF Conf. on Computer Vision and Pattern Recognition (CVPR)}, 2018.
+
+\bibitem{Iber2007AASM}
+Conrad Iber, Sonia Ancoli-Israel, Andrew~L. Chesson, and Stuart~F. Quan.
+\newblock {\em The AASM Manual for the Scoring of Sleep and Associated Events: Rules, Terminology and Technical Specifications}.
+\newblock American Academy of Sleep Medicine, 2007.
+
+\bibitem{ioffe2015batch}
+Sergey Ioffe and Christian Szegedy.
+\newblock Batch normalization: Accelerating deep network training by reducing internal covariate shift.
+\newblock In {\em Proceedings of the 32nd International Conference on Machine Learning}, 2015.
+
+\bibitem{kemp2013sleepedf}
+Bob Kemp.
+\newblock {The Sleep-EDF Database}.
+\newblock PhysioNet/PhysioBank, 2002.
+
+\bibitem{sleepedfx2018}
+Bob Kemp, Ana~Cristina da~Rosa, Joost van Dijk, et~al.
+\newblock {Sleep-EDF Database Expanded}.
+\newblock PhysioNet News, 2018.
+
+\bibitem{kemp2000sleepedf}
+Bob Kemp, Aeilko~H Zwinderman, Bauke Tuk, Henri~A Kamphuisen, and Jeroen~J Oberye.
+\newblock Analysis of a sleep-dependent neuronal feedback loop: The slow-wave microcontinuity of the eeg.
+\newblock {\em IEEE Transactions on Biomedical Engineering}, 2000.
+
+\bibitem{kemp2000microcontinuity}
+Bob Kemp, Aeilko~H. Zwinderman, Bert Tuk, Hilbert A.~C. Kamphuisen, and Josefien J.~L. Obery{\'e}.
+\newblock Analysis of a sleep-dependent neuronal feedback loop: The slow-wave microcontinuity of the eeg.
+\newblock {\em IEEE Transactions on Biomedical Engineering}, 47(9):1185--1194, 2000.
+
+\bibitem{khalighi2016isruc}
+Sirvan Khalighi, Teresa Sousa, Jos{\'e}~Moutinho Santos, and Urbano Nunes.
+\newblock {ISRUC}-sleep: A comprehensive public dataset for sleep researchers.
+\newblock {\em Computer Methods and Programs in Biomedicine}, 124:180--192, 2016.
+
+\bibitem{kingma2015adam}
+Diederik~P. Kingma and Jimmy Ba.
+\newblock {Adam: A Method for Stochastic Optimization}.
+\newblock In {\em International Conference on Learning Representations (ICLR)}, 2015.
+
+\bibitem{li2016adabn}
+Yanghao Li, Naiyan Wang, Jianping Shi, Jiaying Liu, and Xiaodi Hou.
+\newblock Revisiting batch normalization for practical domain adaptation.
+\newblock {\em arXiv preprint arXiv:1603.04779}, 2016.
+
+\bibitem{Li2018AdaBN}
+Yanghao Li, Naiyan Wang, Jianping Shi, Jiaying Liu, and Xiaodi Hou.
+\newblock Adaptive batch normalization for practical domain adaptation.
+\newblock {\em Pattern Recognition}, 80:109--117, 2018.
+
+\bibitem{liang2020shot}
+Jian Liang, Dapeng Hu, and Jiashi Feng.
+\newblock Do we really need to access the source data? source hypothesis transfer for unsupervised domain adaptation.
+\newblock In {\em International Conference on Machine Learning (ICML)}, 2020.
+
+\bibitem{lin2017focal}
+Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Doll{\'a}r.
+\newblock {Focal Loss for Dense Object Detection}.
+\newblock In {\em Proc. IEEE International Conference on Computer Vision (ICCV)}, 2017.
+
+\bibitem{menon2020longtail}
+Aditya~Krishna Menon, Sadeep Jayasumana, Ankit Rawat, Himanshu Jain, Andreas Veit, and Sanjiv Kumar.
+\newblock Long-tail learning via logit adjustment.
+\newblock In {\em Advances in Neural Information Processing Systems}, 2020.
+
+\bibitem{niu2022eata}
+Shuaicheng Niu, Jian Wang, Chang Ren, Gaofeng Zhang, Jinjin Liao, and Tiejun Huang.
+\newblock Efficient test-time model adaptation without forgetting.
+\newblock In {\em Proceedings of the 39th International Conference on Machine Learning (ICML)}, 2022.
+
+\bibitem{oreilly2014mass}
+Christian O'Reilly, Nadia Gosselin, Julie Carrier, and Tore Nielsen.
+\newblock Montreal archive of sleep studies: An open-access resource for instrument benchmarking and exploratory research.
+\newblock {\em Journal of Sleep Research}, 23(6):628--635, 2014.
+
+\bibitem{Perslev2021USleep}
+Mathias Perslev, Sune Darkner, Lykke Kempfner, Miki Nikolic, Poul~J{\o}rgen Jennum, and Christian Igel.
+\newblock {U-Sleep: Resilient high-frequency sleep staging}.
+\newblock {\em npj Digital Medicine}, 4(72), 2021.
+
+\bibitem{perslev2019utime}
+Mathias Perslev, Michael~Hejselbak Jensen, Sune Darkner, Poul~J{\o}rgen Jennum, and Christian Igel.
+\newblock U-time: A fully convolutional network for time series segmentation applied to sleep staging.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)}, 2019.
+
+\bibitem{Phan2019SeqSleepNet}
+Huy Phan, Fernando Andreotti, Navin Cooray, Oliver~Y. Ch{\'e}n, and Maarten De~Vos.
+\newblock Seqsleepnet: End-to-end hierarchical recurrent neural network for sequence-to-sequence automatic sleep staging.
+\newblock {\em IEEE Transactions on Neural Systems and Rehabilitation Engineering}, 27(3):400--410, 2019.
+
+\bibitem{quan1997shhs}
+Stuart~F. Quan, Barbara~V. Howard, Conrad Iber, John~P. Kiley, F.~Javier Nieto, George~T. O'Connor, David~M. Rapoport, Susan Redline, John Robbins, Jonathan~M. Samet, and Patricia~W. Wahl.
+\newblock The sleep heart health study: Design, rationale, and methods.
+\newblock {\em Sleep}, 20(12):1077--1085, 1997.
+
+\bibitem{RechtschaffenKales1968}
+Allan Rechtschaffen and Anthony Kales.
+\newblock {\em A Manual of Standardized Terminology, Techniques and Scoring System for Sleep Stages of Human Subjects}.
+\newblock U.S. National Institutes of Health, 1968.
+
+\bibitem{sun2020ttt}
+Yu~Sun, Xiaolong Wang, Zhuang Liu, John Miller, Alexei~A. Efros, and Moritz Hardt.
+\newblock Test-time training with self-supervision for generalization under distribution shifts.
+\newblock In {\em Proceedings of the 37th International Conference on Machine Learning (ICML)}, 2020.
+
+\bibitem{supratak2017deepsleepnet}
+Akara Supratak, Hao Dong, Chao Wu, and Yike Guo.
+\newblock {DeepSleepNet: A Model for Automatic Sleep Stage Scoring based on Raw Single-Channel EEG}.
+\newblock arXiv:1703.04046, 2017.
+
+\bibitem{wang2021tent}
+Dequan Wang, Evan Shelhamer, Shaoteng Liu, Bruno Olshausen, and Trevor Darrell.
+\newblock Tent: Fully test-time adaptation by entropy minimization.
+\newblock In {\em International Conference on Learning Representations (ICLR)}, 2021.
+
+\bibitem{wang2022cotta}
+Qin Wang, Olga Fink, Luc Van~Gool, and Dengxin Dai.
+\newblock Continual test-time domain adaptation.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, pages 7201--7211, 2022.
+
+\bibitem{alvarezestevez2021interdb}
+Diego Álvarez Est{\'e}vez, Valent{\'i}n Moret-Bonillo, Clara Lado, et~al.
+\newblock Inter-database validation of a deep learning approach for automatic sleep staging.
+\newblock {\em PLOS ONE}, 16(8):e0256111, 2021.
+
+\end{thebibliography}
